@@ -1,0 +1,12 @@
+Template {"NAME":"EZIE-4GANG-SWITCH-PANEL","GPIO":[1,1,1,1,0,1,1,1,99,1,98,224,0,225,226,227,0,1,1,1,0,1,96,97,0,0,0,0,1,0,1,1,1,0,0,1],"FLAG":0,"BASE":1}
+Devicename EZIE_4_Gang_Switch
+friendlyname1 switch1
+friendlyname2 switch2
+friendlyname3 switch3
+friendlyname4 switch4
+Module 0
+Topic %12X
+SetOption13 1
+SetOption1 1
+SetOption73 1
+SetOption151 1
