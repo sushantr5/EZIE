@@ -414,10 +414,10 @@ def on_system_boot()
 end
 
 
-tasmota.add_rule("button1#action=single", def (value) button_click(0) end )
-tasmota.add_rule("button2#action=single", def (value) button_click(1) end )
-tasmota.add_rule("button3#action=single", def (value) button_click(2) end )
-tasmota.add_rule("button4#action=single", def (value) button_click(3) end )
+tasmota.add_rule("button1#Action==SINGLE", def (value) button_click(0) end )
+tasmota.add_rule("button2#Action==SINGLE", def (value) button_click(1) end )
+tasmota.add_rule("button3#Action==SINGLE", def (value) button_click(2) end )
+tasmota.add_rule("button4#Action==SINGLE", def (value) button_click(3) end )
 tasmota.add_rule("System#Init", on_system_boot )
 tasmota.add_rule("Mqtt#Connected", send_ha_discovery_message )
 gpio.pin_mode(out1, gpio.OUTPUT)
