@@ -12,7 +12,7 @@ var color_button_pressed = 0xff0000
 var lights_timeout = 40 #seconds
 #settings end
 
-var ez_cfgtr = ezie_ws2812_configurator(color_button_pressed, color_button_normal, color_fan_speed_bar, lights_timeout)
+
 var ez_fan = ezie_fan()
 
 var fan_speed = 0;
@@ -49,6 +49,9 @@ def persist_load()
     lights_timeout = persist.lights_timeout
   end
 end
+
+persist_load()
+var ez_cfgtr = ezie_ws2812_configurator(color_button_pressed, color_button_normal, color_fan_speed_bar, lights_timeout)
 
 def persist_save()
   persist.fan_speed = fan_speed
@@ -123,8 +126,8 @@ end
 
 def on_system_boot()
   persist_load()
-  update_status_leds()
   tasmota.cmd(string.format("fanspeed %d", fan_speed))
+  update_status_leds()
 end
 
 def fan_speed_changed(value)
@@ -132,6 +135,7 @@ def fan_speed_changed(value)
   if( value != fan_speed )
      tasmota.log(string.format("Existing Value:%d, New Value:%d",fan_speed,value), 4)
     fan_speed = value;
+    persist_save()
     update_status_leds()
   end
 end
@@ -142,6 +146,8 @@ def ws2812_settings_changed()
   color_button_normal = ez_cfgtr.get_NORMAL_or_OFF_state_color()
   color_fan_speed_bar = ez_cfgtr.get_SPEED_indicator_bar_color()
   lights_timeout = ez_cfgtr.get_LIGHTS_timeout()
+  persist_save()
+  update_status_leds()
 end
 
 tasmota.add_rule("button1#Action=SINGLE", def (value) button_click(0) end )
