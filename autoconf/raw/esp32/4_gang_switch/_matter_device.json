@@ -1,1 +1,1 @@
-{"distinguish":956,"passcode":21899789,"ipv4only":false,"nextep":5,"config":{"1":{"relay":0,"type":"relay"},"2":{"relay":1,"type":"relay"},"3":{"relay":2,"type":"relay"},"4":{"relay":3,"type":"relay"}}}
+{"distinguish":956,"passcode":21899789,"ipv4only":false,"disable_bridge_mode":false,"nextep":5,"config":{"1":{"type":"relay","relay":1,"name":"L1"},"2":{"type":"relay","relay":2,"name":"L2"},"3":{"type":"relay","relay":3,"name":"L3"},"4":{"type":"relay","relay":4,"name":"L4"}}}

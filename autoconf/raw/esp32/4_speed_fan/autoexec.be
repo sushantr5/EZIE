@@ -105,6 +105,17 @@ def update_status_leds()
   tasmota.set_timer(lights_timeout * 1000, lights_timeout_function, 'lights_timeout')
 end
 
+def fan_speed_changed(value)
+  tasmota.log(string.format("fan_speed_changed"), 4)
+  if( value != fan_speed )
+     tasmota.log(string.format("Existing Value:%d, New Value:%d",fan_speed,value), 4)
+    fan_speed = value;
+    persist_save()
+    update_status_leds()
+  end
+end
+
+
 def button_click(index)
   tasmota.log(string.format("Button #%d clicked",index+1),4)
   
@@ -120,6 +131,8 @@ def button_click(index)
     tasmota.cmd("fanspeed -")
   end
   
+  fan_speed_changed(ez_fan.get_speed())
+
   tasmota.set_timer(200, touch_indication_function, 'touch_indication')
   
 end
@@ -128,16 +141,6 @@ def on_system_boot()
   persist_load()
   tasmota.cmd(string.format("fanspeed %d", fan_speed))
   update_status_leds()
-end
-
-def fan_speed_changed(value)
-  tasmota.log(string.format("fan_speed_changed"), 4)
-  if( value != fan_speed )
-     tasmota.log(string.format("Existing Value:%d, New Value:%d",fan_speed,value), 4)
-    fan_speed = value;
-    persist_save()
-    update_status_leds()
-  end
 end
 
 def ws2812_settings_changed()
