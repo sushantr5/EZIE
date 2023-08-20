@@ -10,6 +10,7 @@ var color_fan_speed_bar = 0xc20000
 var color_button_normal = 0x00FF00
 var color_button_pressed = 0xff0000
 var lights_timeout = 40 #seconds
+var lights_dim_percentage = 50 #percentage
 #settings end
 
 
@@ -48,10 +49,14 @@ def persist_load()
   if(persist.has('lights_timeout'))
     lights_timeout = persist.lights_timeout
   end
+  
+  if(persist.has('lights_dim_percentage'))
+    lights_dim_percentage = persist.lights_dim_percentage
+  end
 end
 
 persist_load()
-var ez_cfgtr = ezie_ws2812_configurator(color_button_pressed, color_button_normal, color_fan_speed_bar, lights_timeout)
+var ez_cfgtr = ezie_ws2812_configurator(color_button_pressed, color_button_normal, color_fan_speed_bar, lights_timeout, lights_dim_percentage)
 
 def persist_save()
   persist.fan_speed = fan_speed
@@ -59,6 +64,7 @@ def persist_save()
   persist.color_button_normal = color_button_normal
   persist.color_button_pressed = color_button_pressed
   persist.lights_timeout = lights_timeout
+  persist.lights_dim_percentage = lights_dim_percentage
   persist.save() # save to _persist.json
 end
 
@@ -78,6 +84,21 @@ end
 def lights_timeout_function()
   tasmota.log(string.format("lights_timeout_function"), 4)
   leds_left.clear()
+  
+  if ( lights_dim_percentage != 0 )
+    var r = ((color_fan_speed_bar >> 16) & 0xff)
+    var g = ((color_fan_speed_bar >> 8) & 0xff)
+    var b = ((color_fan_speed_bar) & 0xff)
+  
+    var factor = 100.0/lights_dim_percentage
+  
+    var dimmed_rgb = int(string.replace(format("#%02X%02X%02X", r/factor, g/factor, b/factor), "#", "0x"))
+  
+    for i:0..(fan_speed-1)
+      leds_left.set_pixel_color( i, dimmed_rgb )
+    end
+  end
+  
   leds_right.clear()
   leds_right.show()
   leds_left.show()
@@ -149,6 +170,7 @@ def ws2812_settings_changed()
   color_button_normal = ez_cfgtr.get_NORMAL_or_OFF_state_color()
   color_fan_speed_bar = ez_cfgtr.get_SPEED_indicator_bar_color()
   lights_timeout = ez_cfgtr.get_LIGHTS_timeout()
+  lights_dim_percentage = ez_cfgtr.get_LIGHTS_dim_percentage()
   persist_save()
   update_status_leds()
 end
