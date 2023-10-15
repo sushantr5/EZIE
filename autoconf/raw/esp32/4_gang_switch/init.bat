@@ -4,6 +4,7 @@ friendlyname1 switch1
 friendlyname2 switch2
 friendlyname3 switch3
 friendlyname4 switch4
+hostname EZIE_4_GANG_SWITCH
 WifiConfig 2
 Module 0
 Topic %12X
