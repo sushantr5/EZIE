@@ -57,6 +57,7 @@ end
 
 persist_load()
 var ez_cfgtr = ezie_ws2812_configurator(color_button_pressed, color_button_normal, color_fan_speed_bar, lights_timeout, lights_dim_percentage)
+var ha_discovery = ezie_home_assistant_discovery(2)
 
 def persist_save()
   persist.fan_speed = fan_speed

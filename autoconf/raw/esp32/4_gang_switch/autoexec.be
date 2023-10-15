@@ -51,6 +51,7 @@ end
 
 persist_load()
 var ez_cfgtr = ezie_ws2812_configurator(color_button_on, color_button_off, color_fan_speed_bar, lights_timeout, lights_dim_percentage)
+var ha_discovery = ezie_home_assistant_discovery(1)
 
 def persist_save()
   tasmota.log(string.format("persist_save"), 4)
