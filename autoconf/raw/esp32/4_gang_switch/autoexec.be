@@ -88,10 +88,10 @@ def lights_timeout_function()
   
     var power_list = tasmota.get_power()                                        # get a list of booleans with status of each relay
     if size(power_list) > 3
-      power_list.pop(0)? leds_left.set_pixel_color( 0, dimmed_rgb ) : leds_left.set_pixel_color( 0, 0x000000 )
-      power_list.pop(0)? leds_right.set_pixel_color( 0, dimmed_rgb ) : leds_right.set_pixel_color( 0, 0x000000 )
-      power_list.pop(0)? leds_right.set_pixel_color( 1, dimmed_rgb ) : leds_right.set_pixel_color( 1, 0x000000 )
       power_list.pop(0)? leds_left.set_pixel_color( 3, dimmed_rgb ) : leds_left.set_pixel_color( 3, 0x000000 )
+      power_list.pop(0)? leds_right.set_pixel_color( 1, dimmed_rgb ) : leds_right.set_pixel_color( 1, 0x000000 )
+      power_list.pop(0)? leds_right.set_pixel_color( 0, dimmed_rgb ) : leds_right.set_pixel_color( 0, 0x000000 )
+      power_list.pop(0)? leds_left.set_pixel_color( 0, dimmed_rgb ) : leds_left.set_pixel_color( 0, 0x000000 )
     end
   end
   
@@ -125,14 +125,14 @@ def update_status_leds()
   leds_left.set_pixel_color( 2, 0x000000);
   var power_list = tasmota.get_power()                                        # get a list of booleans with status of each relay
   if size(power_list) > 3
-    power_list.pop(0)? leds_left.set_pixel_color( 0, color_button_on ) : leds_left.set_pixel_color( 0, color_button_off )
-    power_list.pop(0)? leds_right.set_pixel_color( 0, color_button_on ) : leds_right.set_pixel_color( 0, color_button_off )
-    power_list.pop(0)? leds_right.set_pixel_color( 1, color_button_on ) : leds_right.set_pixel_color( 1, color_button_off )
     power_list.pop(0)? leds_left.set_pixel_color( 3, color_button_on ) : leds_left.set_pixel_color( 3, color_button_off )
+    power_list.pop(0)? leds_right.set_pixel_color( 1, color_button_on ) : leds_right.set_pixel_color( 1, color_button_off )
+    power_list.pop(0)? leds_right.set_pixel_color( 0, color_button_on ) : leds_right.set_pixel_color( 0, color_button_off )
+    power_list.pop(0)? leds_left.set_pixel_color( 0, color_button_on ) : leds_left.set_pixel_color( 0, color_button_off )
   end
   leds_left.show()
   leds_right.show()
-  
+  persist_save()
   tasmota.set_timer(lights_timeout * 1000, lights_timeout_function, 'lights_timeout')
 end
 
