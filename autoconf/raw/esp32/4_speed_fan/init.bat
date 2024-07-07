@@ -4,6 +4,8 @@ hostname EZIE_4_SPEED_FAN_SWITCH
 WifiConfig 2
 Module 0
 Topic %12X
+MqttClient %12X
+FullTopic %prefix%/%topic%/
 SetOption13 1
 SetOption1 1
 SetOption73 1
