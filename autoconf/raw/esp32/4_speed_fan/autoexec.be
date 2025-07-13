@@ -155,6 +155,7 @@ def button_click(index)
   end
   
   fan_speed_changed(ez_fan.get_speed())
+  update_status_leds()
 
   tasmota.set_timer(200, touch_indication_function, 'touch_indication')
   
